@@ -1,5 +1,7 @@
 package com.example.springbackend.configuration;
 
+import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -9,6 +11,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Log4j2
 public class SocketTextHandler extends TextWebSocketHandler {
     private final Set<WebSocketSession> sessions = ConcurrentHashMap.newKeySet();
 
@@ -22,6 +25,7 @@ public class SocketTextHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+        log.info(session+"클라이언트 접속");
         sessions.add(session);
     }
 
