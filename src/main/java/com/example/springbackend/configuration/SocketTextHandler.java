@@ -8,7 +8,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Log4j2
@@ -18,6 +18,7 @@ public class SocketTextHandler extends TextWebSocketHandler {
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
        String payload = message.getPayload();
+       log.info("payload : ",payload);
        for(WebSocketSession s : sessions){
            s.sendMessage(new TextMessage("Hello"));
        }
@@ -31,6 +32,7 @@ public class SocketTextHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+        log.info(session+"클라이언트 해제");
         sessions.remove(session);
     }
 }
